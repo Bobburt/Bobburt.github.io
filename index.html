@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.content {
+  max-width: 290px;
+  margin: auto;
+}
+
+.tooltip {
+  position: absolute;
+  display: inline;
+}
+
+.tooltip .tooltiptext {
+  font-family: sans-serif;
+  font-size: 14px;
+  visibility: visible;
+  width: 65px;
+  white-space: nowrap;
+  background-color: #777;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px 7px 5px 7px;
+  /* 	   Top Right Bottom Left  */
+  position: absolute;
+  z-index: 1;
+  top: 5px;
+  left: 0%;
+}
+
+
+
+.tooltip .tooltiptext::after {
+  visibility: visible;
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent transparent #777;
+}
+
+.tooltip .tooltiptext2 {
+  visibility: visible;
+  font-family: sans-serif;
+  font-size: 14px;
+  width: auto;
+  white-space: nowrap;
+  background-color: #999;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px 7px 5px 7px;
+  /* 	   Top Right Bottom Left  */
+  position: absolute;
+  z-index: 1;
+  top: 5px;
+  left: 90px;
+}
+
+
+</style>
+</head>
+<body>
+<div class="content">
+
+<br>
+<br>
+	<input type="text" placeholder="scan sp00" value="spD123456789" id="myInput">
+		<div class="tooltip">
+			<button onclick="myFunction()" id="copyButton">
+				Copy	
+			</button>
+		</div>
+<br>
+		<div class="tooltip">
+			<span class="tooltiptext" id="myTooltip">Scan sp00</span><br>
+			<span class="tooltiptext2" id="tooltip2">.</span>
+		</div>
+<br><br>
+
+<ul id="list" style="list-style-type:none">
+
+</ul>
+
+<script>
+
+  var input = document.getElementById("myInput");
+  input.focus();
+  input.select(); 
+  
+function myFunction() {
+  var replacements = {"/^\d{4}-/":"", "/^S&/":"sp", "/001$/":""};
+  var copyText = document.getElementById("myInput").value;
+  var endText = copyText.replace(/^\d{4}-/, "").replace(/^S/, "sp").replace(/_001$/, "");
+  
+  document.getElementById("myInput").value = endText;  
+
+  input.focus();
+  input.select();   
+  document.execCommand("copy");
+  
+  var tooltip = document.getElementById("myTooltip");
+  tooltip.innerHTML = "Copied";  
+  
+  var tooltip = document.getElementById("tooltip2");
+  tooltip.innerHTML = endText;
+  
+/*  var listText = endText.value;  */
+  var node = document.createElement("LI");
+  var textnode = document.createTextNode(endText);
+  node.appendChild(textnode);
+  document.getElementById("list").appendChild(node); 
+}
+
+document.getElementById("myInput").addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+        document.getElementById("copyButton").click(); 	
+		}
+	}
+)
+/*
+document.getElementById("myInput").addEventListener("blur", e => {
+  e.target.focus();
+});    */
+
+</script>
+</div>
+
+</body>
+</html>
